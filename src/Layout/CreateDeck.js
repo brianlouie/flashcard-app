@@ -21,8 +21,7 @@ const handleChange = ({ target }) => {
   }
   setFormData({
     ...formData,
-    [target.name]: target.value,
-    id: newDeckID,
+    [target.name]: target.value
   });
 };
 
@@ -35,14 +34,15 @@ const handleSubmit = async (event) => {
   const lastDeckID = lastDeck[0].id
   newDeckID = lastDeckID + 1
   }
-  await createDeck(formData)
+  const response = await createDeck(formData)
+  console.log(response)
   setDecks([
     ...decks,
     formData,
   ])
   setFormData({ ...initialFormState })
   /* window.location.href = `/decks/${newDeckID}` */
-  history.push(`/decks/${newDeckID}`);
+  history.push(`/decks/${response.id}`);
 }
 
 return (

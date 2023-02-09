@@ -51,11 +51,11 @@ return response
   }, [deckId, decks]);
 
   useEffect(() => {
-    const placeCards = cards.filter((card) => {
+    const placeCards = currentCards.filter((card) => {
       return card.deckId.toString() === deckId && card.id !== 7;
     });
     setCurrentCards(placeCards);
-  }, [deckId, decks, cards]);
+  }, [deckId, decks]);
 
   if (!deck) return null;
   const currentCard = currentCards[currentCardIndex];

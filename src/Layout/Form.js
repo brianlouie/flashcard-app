@@ -10,16 +10,25 @@ function Form({decks, cards, setCards, deck, setDeck}) {
   };
 
   const [formData, setFormData] = useState({ ...initialFormState });
+  const [currentCards, setCurrentCards] = useState()
   const { deckId, cardId } = useParams();
 
   const history = useHistory();
 
   useEffect(() => {
-    async function currentDeck() {
-      return await readDeck(deckId);
+    async function currentDeck(){
+      try {
+       const response = await readDeck(deckId)
+       setDeck(response)
+       setCurrentCards(response.cards)
+  return response
+      } catch (error) {
+        console.log(error);
+      }
+  
     }
-    currentDeck().then(setDeck);
-  }, [deckId, decks, cards, setDeck]);
+    currentDeck()
+  }, [deckId, setDeck]);
 
   useEffect(() => {
     if(cardId){
@@ -41,9 +50,9 @@ function Form({decks, cards, setCards, deck, setDeck}) {
       });
     } else {
     let newCardID
-    if(cards.length === 0){newCardID = 1}
+    if(currentCards.length === 0){newCardID = 1}
     else{
-    const sorted = cards.sort(function(a, b){return a.id - b.id})
+    const sorted = currentCards.sort(function(a, b){return a.id - b.id})
     const lastCard = sorted.slice(-1);
     const lastCardID = lastCard[0].id;
     newCardID = lastCardID + 1;
@@ -52,7 +61,7 @@ function Form({decks, cards, setCards, deck, setDeck}) {
       ...formData,
       [target.name]: target.value,
       deckId: deckId,
-      id: newCardID,
+
 
     });
   }
@@ -62,18 +71,15 @@ function Form({decks, cards, setCards, deck, setDeck}) {
     event.preventDefault();
     if(cardId){
       await updateCard(formData);
-       const updateCards = cards.filter((card) => {
+       const updateCards = currentCards.filter((card) => {
          return card.id !== formData.id;
        });
-       setCards([...updateCards, formData]);
+
        setFormData({ ...initialFormState });
        history.push(`/decks/${deckId}`);
     } else {
    await createCard(deckId, formData);
-    setCards([
-      ...cards,
-      formData,
-    ])
+
     setFormData({ ...initialFormState });
   }
   };

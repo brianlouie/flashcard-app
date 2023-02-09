@@ -1,46 +1,51 @@
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { deleteCard, deleteDeck, readDeck, listDecks} from "../utils/api/index";
 
-function Deck({ decks, cards, setCards, setCurrentDecks}) {
+function Deck({ decks, cards, setCards, setDecks, setCurrentDecks}) {
+  const [currentCards, setCurrentCards] = useState();
   const [currentDeck, setCurrentDeck] = useState([]);
   const { deckId } = useParams();
+  const { url } = useRouteMatch();
   const history = useHistory();
 
   useEffect(() => {
-    async function placeDeck(){
-      setCurrentDeck([])
-      try{
-       const response = await readDeck(deckId)
-       setCurrentDeck(response)
-      } catch (error) {
-        console.log(error)
+      async function currentDeck(){
+        try {
+         const response = await readDeck(deckId)
+         setCurrentDeck(response)
+         setCurrentCards(response.cards)
+    return response
+        } catch (error) {
+          console.log(error);
+        }
+    
       }
-      
-    }
-    placeDeck()
-    }, [deckId, decks, cards]);
+      currentDeck()
+    }, [deckId, decks]);
 
     async function loadCards() {
-      const abortController = new AbortController();
-      try {
-        const response = await fetch(
-          "http://localhost:8080/cards",
-          { signal: abortController.signal }
-        );
-        const cardsFromAPI = await response.json();
-        setCards(cardsFromAPI);
-      } catch (error) {
-        if (error.name === "AbortError") {
-        } else {
-          throw error;
+      async function currentDeck(){
+        try {
+         const response = await readDeck(deckId)
+         setCurrentDeck(response)
+         setCurrentCards(response.cards)
+    return response
+        } catch (error) {
+          console.log(error);
         }
+    
       }
+      currentDeck()
     }
 
    async function deleteHandler(ID) {
     if (window.confirm("Delete?")) {
+      const newCardList = currentCards.filter((card) => {
+        return card.deckId !== ID;
+      });
+
       await deleteDeck(ID);
       const response = await listDecks();
       setCurrentDecks(response);
@@ -51,12 +56,13 @@ function Deck({ decks, cards, setCards, setCurrentDecks}) {
 
  async function deleteCardHandler(ID) {
     if (window.confirm("Delete?")) {
-      const newCardList = cards.filter((card) => {
+      const newCardList = currentCards.filter((card) => {
         return card.id !== ID;
       });
 
     await deleteCard(ID);
-      setCards(newCardList);
+      setCurrentCards(newCardList);
+      loadCards();
       history.push(`/decks/${deckId}`);
     }
   }

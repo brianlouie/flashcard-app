@@ -9,6 +9,7 @@ import EditDeck from "./EditDeck";
 import EditCard from "./EditCard";
 import AddCard from "./AddCard";
 import { Route, Switch } from "react-router-dom";
+import { listDecks } from "../utils/api";
 
 function Layout() {
   
@@ -17,57 +18,9 @@ const [cards, setCards] = useState([]);
 const [deck, setDeck] = useState([]);
 const [currentDecks, setCurrentDecks] = useState([]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
+
   
-    async function loadDecks() {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/decks",
-          { signal: abortController.signal }
-        );
-        const decksFromAPI = await response.json();
-        setDecks(decksFromAPI);
-      } catch (error) {
-        if (error.name === "AbortError") {
-        } else {
-          throw error;
-        }
-      }
-    }
-  
-    loadDecks();
-  
-    return () => {
-      abortController.abort(); // Cancels any pending request or response
-    };
-  }, [])
-  
-  useEffect(() => {
-    const abortController = new AbortController();
-  
-    async function loadCards() {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/cards",
-          { signal: abortController.signal }
-        );
-        const cardsFromAPI = await response.json();
-        setCards(cardsFromAPI);
-      } catch (error) {
-        if (error.name === "AbortError") {
-        } else {
-          throw error;
-        }
-      }
-    }
-  
-    loadCards();
-  
-    return () => {
-      abortController.abort(); // Cancels any pending request or response
-    };
-  }, [])
+ 
   
   return (
     <>

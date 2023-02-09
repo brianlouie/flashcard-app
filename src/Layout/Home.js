@@ -4,22 +4,6 @@ import { useHistory } from "react-router-dom";
 
 function Home({setCards, currentDecks, setCurrentDecks }) {
 
-  async function loadCards() {
-    const abortController = new AbortController();
-    try {
-      const response = await fetch(
-        "http://localhost:8080/cards",
-        { signal: abortController.signal }
-      );
-      const cardsFromAPI = await response.json();
-      setCards(cardsFromAPI);
-    } catch (error) {
-      if (error.name === "AbortError") {
-      } else {
-        throw error;
-      }
-    }
-  }
 
   const history = useHistory();
   async function deleteHandler(ID) {
@@ -28,7 +12,6 @@ function Home({setCards, currentDecks, setCurrentDecks }) {
       await deleteDeck(ID);
       const response = await listDecks();
       setCurrentDecks(response);
-      loadCards();
       history.push(`/`);
     }
   }

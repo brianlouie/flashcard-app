@@ -1,17 +1,65 @@
 {
   "decks": [
     {
-      "name": "React Router",
-      "description": "React Router is a collection of navigational components that compose declaratively with your application.",
+      "id": 1,
+      "name": "Rendering in React",
+      "description": "React's component structure allows for quickly building a complex web application that relies on DOM manipulation. "
+    },
+    {
+      "name": "React Rouasfdter",
+      "description": "React Router is a collection of asdfanavigational components that compose declaratively with your application.",
       "id": 2
     },
     {
       "name": "asdf",
-      "description": "asdf",
+      "description": "fdasfasd",
       "id": 3
+    },
+    {
+      "name": "fda",
+      "description": "fdas",
+      "id": 4
+    },
+    {
+      "name": "asdf",
+      "description": "asdf",
+      "id": 5
+    },
+    {
+      "name": "fas",
+      "description": "fasfas",
+      "id": 6
+    },
+    {
+      "name": "fad",
+      "description": "fasaf",
+      "id": 7
+    },
+    {
+      "name": "fasdf",
+      "description": "asfdas",
+      "id": 8
     }
   ],
   "cards": [
+    {
+      "id": 1,
+      "front": "Differentiate between Real DOM and Virtual DOM.",
+      "back": "Virtual DOM updates are faster but do not directly update the HTML",
+      "deckId": 1
+    },
+    {
+      "id": 2,
+      "front": "How do you modify the state of a different React component?",
+      "back": "Not at all! State is visible to the component only.",
+      "deckId": 1
+    },
+    {
+      "id": 3,
+      "front": "How do you pass data 'down' to a React child component?",
+      "back": "As properties or props",
+      "deckId": 1
+    },
     {
       "front": "What path will match the follow Route?\n<Route>\n  <NotFound />\n</Route>",
       "back": "All paths. A route with no path matches all URL's",
@@ -25,22 +73,11 @@
       "id": 5
     },
     {
-      "front": "fda",
-      "back": "fdas",
-      "deckId": 3,
-      "id": 6
-    },
-    {
-      "front": "a",
-      "back": "a",
-      "deckId": 3,
+      "cards": [],
+      "front": "b",
+      "back": "b",
+      "deckId": 1,
       "id": 7
-    },
-    {
-      "front": "fsda",
-      "back": "fdas",
-      "deckId": 3,
-      "id": 8
     }
   ]
 }
