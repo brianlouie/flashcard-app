@@ -1,0 +1,1 @@
+Application in which you can name and create decks, and also create flashcards within those decks. When clicking on a deck to quiz yourself, you are presented with the question on the flashcard, with the ability to flip the flashcard to reveal the answer.
